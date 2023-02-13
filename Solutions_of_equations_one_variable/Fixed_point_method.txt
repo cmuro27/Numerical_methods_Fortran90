@@ -1,0 +1,64 @@
+program puntofijo
+!ste es el m‚todo del punto fijo
+implicit none
+real :: a,b,fa,fb,x,fun,p,fp,tol,gp,aux,auxg,auxgpri
+integer :: i
+write(*,*)"Definir intervalo a,b"
+read(*,*)a,b
+write(*,*)"Debe ingresar la funci¢n auxiliar g(x) antes de correr programa"
+write(*,*)"Introducir tolerancia de aproximaciones"
+read(*,*)tol
+x=a
+fa=fun(a)
+x=b
+fb=fun(b)
+write(*,*)"Los valores de f(a) y de f(b) son"
+print*, fa,fb
+p=(a+b)/2
+i=0
+x=p
+fp=fun(x)
+!
+!
+condd: if((fa*fb)>0)then
+write(*,*)"No existe ra¡z real en dicho intervalo"
+stop "Verifica intervalo"
+read(*,*)
+end if condd
+!
+!Iteraci¢n del punto fijo
+cond1: if(abs(fp)<tol.or.fp==0)then
+stop "acab¢"
+else
+write(*,*)"La iteraci¢n del punto fijo es:"
+write(*,*)"El n£mero de iteraci¢n, el de p y el de f(p) son:"
+do while(abs(fp)>tol.or.fp/=0)
+i=i+1
+x=p
+gp=auxg(x)
+x=gp
+fp=fun(x)
+p=x
+write(*,5)i,x,fp
+5 format(I2," ",f12.8,f12.8)
+cond2: if(abs(fp)<tol.or.fp==0.or.i>=30)then
+exit
+end if cond2
+end do
+end if cond1
+!
+!
+read(*,*)
+end program puntofijo
+!
+function fun (x)
+real, intent(in) :: x
+fun=
+return
+end function fun
+!
+function auxg (x)
+real, intent(in) :: x
+auxg=
+return
+end function auxg
